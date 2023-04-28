@@ -9,6 +9,7 @@ import com.averywanda.beverageapi.repository.BeverageTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -32,6 +33,7 @@ public class BeverageService {
             return beverageTypeRepository.save(beverageTypeObject);
         }
     }
+
     /**
      * Method handles the creating of a new beverage object.
      * @param beverageObject
@@ -60,6 +62,21 @@ public class BeverageService {
      */
     public List<Beverage> getBeverages() {
         return beverageRepository.findAll();
+    }
+
+    /**
+     *
+     * @param beverageTypeId
+     * @return
+     */
+    public Optional<BeverageType> getBeverageType(Long beverageTypeId) {
+        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        // if beverage type exist
+        if (beverageType.isPresent()) {
+            return beverageType;
+        } else {
+            throw new InformationNotFoundException("Beverage Type with id " + beverageTypeId + " is not found" );
+        }
     }
 
     /**

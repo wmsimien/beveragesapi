@@ -32,9 +32,18 @@ public class BeverageController {
         return beverageService.createBeverageTypes(beverageTypeObject);
     }
 
+    /**
+     * Method calls beverage type service object to handle getting all beverage types.
+     * @return
+     */
     @GetMapping(path = "/beverage-type/")
     public List<BeverageType> getBeverageTypes() {
         return beverageService.getBeverageTypes();
+    }
+
+    @GetMapping(path = "/beverage-type/{beverageTypeId}/")
+    public Optional<BeverageType> getBeverageType(@PathVariable Long beverageTypeId) {
+        return beverageService.getBeverageType(beverageTypeId);
     }
 
     /**
@@ -61,7 +70,7 @@ public class BeverageController {
      * @param beverageId
      * @return
      */
-    @GetMapping(path="/beverages/{beverageId}")
+    @GetMapping(path="/beverages/{beverageId}/")
     public Optional<Beverage> getBeverage(@PathVariable Long beverageId) {
         return beverageService.getBeverage(beverageId);
     }
