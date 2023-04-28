@@ -36,7 +36,19 @@ public class BeverageController {
      * @return A list of beverage objects.
      */
     @GetMapping(path = "/beverages/")
-    public List<Beverage> beverages() {
+    public List<Beverage> getBeverages() {
         return beverageService.getBeverages();
     }
+
+    /**
+     * Method calls service object to get a specific beverage based on an Id passed in.
+     * @param beverageId
+     * @return
+     */
+    @GetMapping(path="/beverages/{beverageId}")
+    public Optional<Beverage> getBeverage(@PathVariable Long beverageId) {
+        return beverageService.getBeverage(beverageId);
+    }
+
+
 }
