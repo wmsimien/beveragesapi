@@ -52,7 +52,25 @@ public class BeverageService {
     }
 
     /**
-     * Method handles returning all beverage types.
+     * Method handles returning all beverage objects for a specific beverage type Id.
+     * @param beverageTypeId
+     * @return
+     */
+    public List<Beverage> getBeverageTypeBeverage(Long beverageTypeId) {
+        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        if (beverageType.isPresent()){
+            if (beverageType.get().getBeverageList().size() == 0) {
+                throw new InformationNotFoundException("Beverages with BeverageTypeId " + beverageTypeId + " not found");
+            } else {
+                return beverageType.get().getBeverageList();
+            }
+        } else {
+            throw new InformationNotFoundException("Beverages with BeverageTypeId " + beverageTypeId + " not found");
+        }
+    }
+
+    /**
+     * Method handles returning all beverages for a specific beverage type.
      * @return A list of BeverageType objects.
      */
     public List<BeverageType> getBeverageTypes() {
@@ -68,7 +86,7 @@ public class BeverageService {
     }
 
     /**
-     *
+     * Method handles returning a specific beverage type based on the Id passed-in.
      * @param beverageTypeId
      * @return
      */
@@ -133,11 +151,5 @@ public class BeverageService {
         }
     }
 
-//    public Beverage updateBeverage(@PathVariable Long beverageId, @RequestBody Beverage beverageObject) {
-//        Optional<Beverage> beverage = beverageRepository.findById(beverageId);
-//        // if the beverage exist
-//        if (beverage.isPresent()) {
-//            // check if the beverage
-//        }
-//
-    }
+
+}

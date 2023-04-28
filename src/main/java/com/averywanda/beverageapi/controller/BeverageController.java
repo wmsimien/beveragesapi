@@ -83,7 +83,7 @@ public class BeverageController {
     }
 
     /**
-     * Method calls service object to return a list of beverages.
+     * Method calls service object to return a list of beverages for a specific beverager type.
      * @return A list of beverage objects.
      */
     @GetMapping(path = "/beverages/")
@@ -103,14 +103,13 @@ public class BeverageController {
 
     /**
      *
-     * @param beverageId
-     * @param beverageObject
+     * @param beverageTypeId
      * @return
      */
-//    @PutMapping(path = "/beverages/{beverageId}")
-//    public Beverage updateBeverage(@PathVariable Long beverageId, @RequestBody Beverage beverageObject) {
-//
-//    }
+    @GetMapping(path = "/beverage-type/{beverageTypeId}/beverages/")
+    public List<Beverage> getBeverageTypeBeverage(@PathVariable(value = "beverageTypeId") Long beverageTypeId) {
+        return beverageService.getBeverageTypeBeverage(beverageTypeId);
+    }
 
 
 }
