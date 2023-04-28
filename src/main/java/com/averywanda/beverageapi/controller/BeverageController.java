@@ -73,13 +73,13 @@ public class BeverageController {
     }
 
     /**
-     * Method calls beverage service object to handle creating of a new beverage object.
+     * Method calls beverage service object to handle creating of a new beverage object under a specific beverage type.
      * @param beverageObject
      * @return A Beverage object.
      */
-    @PostMapping(path = "/beverages/")
-    public Beverage createBeverage(@RequestBody Beverage beverageObject) {
-        return beverageService.createBeverage(beverageObject);
+    @PostMapping(path = "/beverage-type/{beverageTypeId}/")
+    public Beverage createBeverageTypeBeverage(@PathVariable(value = "beverageTypeId") Long beverageTypeId, @RequestBody Beverage beverageObject) {
+        return beverageService.createBeverageTypeBeverage(beverageTypeId, beverageObject);
     }
 
     /**

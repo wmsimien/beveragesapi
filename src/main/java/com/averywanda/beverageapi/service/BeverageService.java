@@ -37,16 +37,17 @@ public class BeverageService {
     }
 
     /**
-     * Method handles the creating of a new beverage object.
+     * Method handles the creating of a new beverage object for a specific beverage type.
      * @param beverageObject
      * @return A new beverage object.
      */
-    public Beverage createBeverage(Beverage beverageObject) {
-        Beverage beverage = beverageRepository.findByName(beverageObject.getName());
-        if (beverage != null) {
-            throw new InformationExistException("Beverage with name " + beverageObject.getName() + " already exist.");
-        } else {
+    public Beverage createBeverageTypeBeverage(Long beverageTypeId, Beverage beverageObject) {
+        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        if (beverageType.isPresent()) {
+            beverageObject.setBeverageType(beverageType.get());
             return beverageRepository.save(beverageObject);
+        } else {
+            throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " not found.");
         }
     }
 
