@@ -8,6 +8,8 @@ import com.averywanda.beverageapi.repository.BeverageRepository;
 import com.averywanda.beverageapi.repository.BeverageTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 import java.util.List;
@@ -91,6 +93,26 @@ public class BeverageService {
             return beverage;
         } else {
             throw new InformationNotFoundException("Beverage with id " + beverageId + " is not found" );
+        }
+    }
+
+    /**
+     * Method handles updating a BeverageType name for a specific beverageTypeId.
+     * @param beverageTypeId
+     * @param beverageTypeObject
+     * @return
+     */
+    public BeverageType updateBeverageType(@PathVariable Long beverageTypeId, @RequestBody BeverageType beverageTypeObject) {
+        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        logger.info(beverageType.get().getName());
+        // if exist
+        if (beverageType.get().getName().equals(beverageTypeObject.getName())) {
+            throw new InformationExistException("Beverage Type " + beverageType.get().getName() + " already exist.");
+        } else {
+            // get the container and set passed-in data
+            BeverageType updatedBeverageType = beverageType.get();
+            updatedBeverageType.setName(beverageTypeObject.getName());
+            return beverageTypeRepository.save(updatedBeverageType);
         }
     }
 
