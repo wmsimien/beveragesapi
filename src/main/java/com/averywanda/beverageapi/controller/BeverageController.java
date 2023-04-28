@@ -23,7 +23,7 @@ public class BeverageController {
     }
 
     /**
-     * Method calls the beverage service object to handle creating a new beverage type object.
+     * Method calls the Beverage service object to handle creating a new beverage type object.
      * @param beverageTypeObject
      * @return
      */
@@ -33,7 +33,7 @@ public class BeverageController {
     }
 
     /**
-     * Method calls BeverageType service object to handle getting all beverage types.
+     * Method calls Beverage service object to handle getting all beverage types.
      * @return A list of BeverageType objects.
      */
     @GetMapping(path = "/beverage-type/")
@@ -42,7 +42,7 @@ public class BeverageController {
     }
 
     /**
-     * Method call BeverageType service object to handle getting a specific beverage type by Id
+     * Method call Beverage service object to handle getting a specific beverage type by Id.
      * @param beverageTypeId
      * @return A BeverageType object.
      */
@@ -52,7 +52,7 @@ public class BeverageController {
     }
 
     /**
-     *
+     * Method calls the Beverage service object to handle updating a specific beverage type name.
      * @param beverageTypeId
      * @param beverageTypeObject
      * @return
@@ -60,6 +60,16 @@ public class BeverageController {
     @PutMapping(path = "/beverage-type/{beverageTypeId}/")
     public BeverageType updateBeverageType(@PathVariable Long beverageTypeId, @RequestBody BeverageType beverageTypeObject) {
         return beverageService.updateBeverageType(beverageTypeId, beverageTypeObject);
+    }
+
+    /**
+     * Method calls the Beverage server object to handle deleting a specific beverage type by Id.
+     * @param beverageTypeId
+     * @return
+     */
+    @DeleteMapping(path = "/beverage-type/{beverageTypeId}/")
+    public Optional<BeverageType> deleteBeverageType(@PathVariable Long beverageTypeId) {
+        return beverageService.deleteBeverageType(beverageTypeId);
     }
 
     /**

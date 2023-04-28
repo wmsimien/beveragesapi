@@ -116,6 +116,22 @@ public class BeverageService {
         }
     }
 
+    /**
+     * Method handles deleting a specific BevereaeType by beverageId.
+     * @param beverageTypeId
+     * @return
+     */
+    public Optional<BeverageType> deleteBeverageType(Long beverageTypeId) {
+        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        // if beverage type exist
+        if (beverageType.isPresent()) {
+            beverageTypeRepository.deleteById(beverageTypeId);
+            return beverageType;
+        } else {
+            throw new InformationNotFoundException("Beverage Type with id " + beverageTypeId + " is not found" );
+        }
+    }
+
 //    public Beverage updateBeverage(@PathVariable Long beverageId, @RequestBody Beverage beverageObject) {
 //        Optional<Beverage> beverage = beverageRepository.findById(beverageId);
 //        // if the beverage exist
