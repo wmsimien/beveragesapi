@@ -1,6 +1,7 @@
 package com.averywanda.beverageapi.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -21,6 +22,10 @@ public class BeverageType {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Beverage> beverageList;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
     public BeverageType() {
     }
@@ -61,5 +66,13 @@ public class BeverageType {
                 ", name='" + name + '\'' +
                 ", beverageList=" + beverageList +
                 '}';
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
