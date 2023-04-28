@@ -1,6 +1,7 @@
 package com.averywanda.beverageapi.controller;
 
 import com.averywanda.beverageapi.model.Beverage;
+import com.averywanda.beverageapi.model.BeverageType;
 import com.averywanda.beverageapi.service.BeverageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,22 @@ public class BeverageController {
     }
 
     /**
-     * Method calls service object to handle creation of a new beverage object.
+     * Method calls the beverage service object to handle creating a new beverage type object.
+     * @param beverageTypeObject
+     * @return
+     */
+    @PostMapping(path = "/beverage-type/")
+    public BeverageType createBeverageTypes(@RequestBody BeverageType beverageTypeObject) {
+        return beverageService.createBeverageTypes(beverageTypeObject);
+    }
+
+    @GetMapping(path = "/beverage-type/")
+    public List<BeverageType> getBeverageTypes() {
+        return beverageService.getBeverageTypes();
+    }
+
+    /**
+     * Method calls beverage service object to handle creating of a new beverage object.
      * @param beverageObject
      * @return A Beverage object.
      */
@@ -49,6 +65,17 @@ public class BeverageController {
     public Optional<Beverage> getBeverage(@PathVariable Long beverageId) {
         return beverageService.getBeverage(beverageId);
     }
+
+    /**
+     *
+     * @param beverageId
+     * @param beverageObject
+     * @return
+     */
+//    @PutMapping(path = "/beverages/{beverageId}")
+//    public Beverage updateBeverage(@PathVariable Long beverageId, @RequestBody Beverage beverageObject) {
+//
+//    }
 
 
 }

@@ -3,7 +3,9 @@ package com.averywanda.beverageapi.service;
 import com.averywanda.beverageapi.exception.InformationExistException;
 import com.averywanda.beverageapi.exception.InformationNotFoundException;
 import com.averywanda.beverageapi.model.Beverage;
+import com.averywanda.beverageapi.model.BeverageType;
 import com.averywanda.beverageapi.repository.BeverageRepository;
+import com.averywanda.beverageapi.repository.BeverageTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,18 @@ public class BeverageService {
 
     @Autowired
     private BeverageRepository beverageRepository;
+    @Autowired
+    private BeverageTypeRepository beverageTypeRepository;
 
+    public BeverageType createBeverageTypes(BeverageType beverageTypeObject) {
+        BeverageType beverageType = beverageTypeRepository.findByName(beverageTypeObject.getName());
+        // check if exist
+        if (beverageType != null) {
+            throw new InformationExistException("Beverage Type with name " + beverageTypeObject.getName() + " already exist.");
+        } else {
+            return beverageTypeRepository.save(beverageTypeObject);
+        }
+    }
     /**
      * Method handles the creating of a new beverage object.
      * @param beverageObject
@@ -31,6 +44,14 @@ public class BeverageService {
         } else {
             return beverageRepository.save(beverageObject);
         }
+    }
+
+    /**
+     * Method handles returning all beverage types.
+     * @return A list of BeverageType objects.
+     */
+    public List<BeverageType> getBeverageTypes() {
+        return beverageTypeRepository.findAll();
     }
 
     /**
@@ -56,4 +77,11 @@ public class BeverageService {
         }
     }
 
-}
+//    public Beverage updateBeverage(@PathVariable Long beverageId, @RequestBody Beverage beverageObject) {
+//        Optional<Beverage> beverage = beverageRepository.findById(beverageId);
+//        // if the beverage exist
+//        if (beverage.isPresent()) {
+//            // check if the beverage
+//        }
+//
+    }
