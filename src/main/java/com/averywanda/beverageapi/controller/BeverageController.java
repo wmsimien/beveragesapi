@@ -111,12 +111,41 @@ public class BeverageController {
         return beverageService.getBeverageTypeBeverage(beverageTypeId);
     }
 
+    /**
+     * Method calls service object to get a specific beverage for a specific beverage type.
+     * @param beverageTypeId
+     * @param beverageId
+     * @return
+     */
     @GetMapping(path = "/beverage-type/{beverageTypeId}/beverages/{beverageId}/")
     public List<Beverage> getBeverageTypeBeveragesBeverage(@PathVariable(value = "beverageTypeId") Long beverageTypeId, @PathVariable Long beverageId) {
-        logger.info(beverageId.toString());
-        logger.info(beverageTypeId.toString());
         return beverageService.getBeverageTypeBeveragesBeverage(beverageTypeId, beverageId);
     }
+
+    /**
+     * Calls service object to handle updating a specific beverage for a specific beverage type.
+     * @param beverageTypeId
+     * @param beverageId
+     * @param beverageObject
+     * @return
+     */
+    @PutMapping(path = "/beverage-type/{beverageTypeId}/beverages/{beverageId}/")
+    public Beverage updateBeverageTypeBeveragesBeverage(@PathVariable(value = "beverageTypeId") Long beverageTypeId, @PathVariable Long beverageId, @RequestBody Beverage beverageObject) {
+        return beverageService.updateBeverageTypeBeveragesBeverage(beverageTypeId, beverageId, beverageObject);
+    }
+
+    /**
+     * Calls service object to handle deleting a specific beverage for a specific beverage type.
+     * @param beverageTypeId
+     * @param beverageId
+     */
+    @DeleteMapping(path = "/beverage-type/{beverageTypeId}/beverages/{beverageId}/")
+    public void deleteBeverageTypeBeveragesBeverage(@PathVariable(value = "beverageTypeId") Long beverageTypeId, @PathVariable Long beverageId) {
+        beverageService.deleteBeverageTypeBeveragesBeverage(beverageTypeId, beverageId);
+    }
+
+
+
 
 
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -137,7 +138,7 @@ public class BeverageService {
     /**
      * Method handles returning all beverage objects for a specific beverage type Id.
      * @param beverageTypeId
-     * @return
+     * @return List of Beverage objects.
      */
     public List<Beverage> getBeverageTypeBeverage(Long beverageTypeId) {
         Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
@@ -152,29 +153,58 @@ public class BeverageService {
         }
     }
 
+    /**
+     * Method obtain beverages for a specific beverage type
+     * @param beverageTypeId
+     * @param beverageId
+     * @return List of r Beverage objects.
+     */
     public List<Beverage> getBeverageTypeBeveragesBeverage(Long beverageTypeId, Long beverageId) {
         Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
         if (beverageType.isPresent()) {
-//            logger.info(beverageType.get().getBeverageList().toString());
             return beverageType.get().getBeverageList().stream().filter(b -> b.getId().equals(beverageId)).collect(Collectors.toList());
         } else {
             throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " not found.");
         }
-
     }
 
-//    public Beverage updateBeverageTypeBeverage(Long beverageTypeId, Beverage beverageObject) {
-//        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
-//        if (beverageType.isPresent()) {
-//            beverageObject.setBeverageType(beverageType.get());
-////            beverageObject.getName()
-//            return beverageRepository.save(beverageObject);
-//        } else {
-//            throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " not found.");
-//        }
-//
-//    }
+    /**
+     * Method handles updating a specific beverage for a specific beverage type id
+     * @param beverageTypeId
+     * @param beverageId
+     * @param beverageObject
+     * @return Updated Beverage object.
+     */
+    public Beverage updateBeverageTypeBeveragesBeverage(Long beverageTypeId, Long beverageId, Beverage beverageObject) {
+        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        if (beverageType.isPresent()) {
+            Optional<Beverage> beverage = beverageRepository.findById(beverageId);
+            if (beverage.isPresent()) {
+                beverage.get().setName(beverageObject.getName());
+                beverage.get().setBeverageType(beverageType.get());
+                beverage.get().setDescription(beverageObject.getDescription());
+                beverage.get().setPairing(beverageObject.getPairing());
+                beverage.get().setGoodToKnow(beverageObject.getGoodToKnow());
+                beverage.get().setProTip(beverageObject.getProTip());
+                return beverageRepository.save(beverage.get());
+            } else {
+                throw new InformationNotFoundException("Beverage type with id " + beverageId + " and beverage type id " + beverageTypeId + " not found");
+            }
+        } else {
+            throw new InformationNotFoundException("Beverage type with id " + beverageId +  " is not found");
+        }
+    }
 
-
-
+    /**
+     * Method handles deleting a specific beverage of a specific beverage type.
+     * @param beverageTypeId
+     * @param beverageId
+     */
+    public void deleteBeverageTypeBeveragesBeverage(Long beverageTypeId, Long beverageId) {
+        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        if (beverageType.isPresent()) {
+            Optional<Beverage> beverage = beverageRepository.findById(beverageId);
+            beverageRepository.deleteById(beverage.get().getId());
+        }
+    }
 }
