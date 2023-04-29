@@ -11,13 +11,8 @@ import com.averywanda.beverageapi.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
-
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -43,7 +38,7 @@ public class BeverageService {
 
     /** @PostMapping(path = "/beverage-type/")
      * Method handles creating beverage types for the current logged-in user
-     * @param beverageTypeObject
+     * @param beverageTypeObject  BeverageType Object with data to create a new beverage type.
      * @return A BeverageType object.
      */
     public BeverageType createBeverageTypes(BeverageType beverageTypeObject) {
@@ -120,8 +115,8 @@ public class BeverageService {
 
     /** @PutMapping(path = "/beverage-type/{beverageTypeId}/")
      * Method handles updating a BeverageType name for a specific beverageTypeId for the currently logged-in user.
-     * @param beverageTypeId
-     * @param beverageTypeObject
+     * @param beverageTypeId Id of beverage type to update
+     * @param beverageTypeObject BeverageType Object with data to update existing beverage type.
      * @return
      */
     public BeverageType updateBeverageType(Long beverageTypeId, BeverageType beverageTypeObject) {
@@ -157,7 +152,7 @@ public class BeverageService {
 
     /** @PostMapping(path = "/beverage-type/{beverageTypeId}/")
      * Method handles the creating of a new beverage object for a specific beverage type for the currently logged-in user.
-     * @param beverageObject
+     * @param beverageObject Beverage Type Object with data to create new beverage.
      * @return A new beverage object.
      */
     public Beverage createBeverageTypeBeverage(Long beverageTypeId, Beverage beverageObject) {
@@ -208,15 +203,15 @@ public class BeverageService {
         }
     }
 
-    /**
-     * Method handles updating a specific beverage for a specific beverage type id
+    /** @PutMapping(path = "/beverage-type/{beverageTypeId}/beverages/{beverageId}/")
+     * Method handles updating a specific beverage for a specific beverage type id for the currently logged-in user.
      * @param beverageTypeId
      * @param beverageId
      * @param beverageObject
      * @return Updated Beverage object.
      */
     public Beverage updateBeverageTypeBeveragesBeverage(Long beverageTypeId, Long beverageId, Beverage beverageObject) {
-        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        Optional<BeverageType> beverageType = beverageTypeRepository.findByIdAndUserId(beverageTypeId, getCurrentLoggedInUser().getId());
         if (beverageType.isPresent()) {
             Optional<Beverage> beverage = beverageRepository.findById(beverageId);
             if (beverage.isPresent()) {
@@ -226,12 +221,13 @@ public class BeverageService {
                 beverage.get().setPairing(beverageObject.getPairing());
                 beverage.get().setGoodToKnow(beverageObject.getGoodToKnow());
                 beverage.get().setProTip(beverageObject.getProTip());
+                beverage.get().setUser(getCurrentLoggedInUser());
                 return beverageRepository.save(beverage.get());
             } else {
-                throw new InformationNotFoundException("Beverage type with id " + beverageId + " and beverage type id " + beverageTypeId + " not found");
+                throw new InformationNotFoundException("Beverage type with id " + beverageId + ", beverage type id " + beverageTypeId + " and userId " + getCurrentLoggedInUser().getId() + " is not found");
             }
         } else {
-            throw new InformationNotFoundException("Beverage type with id " + beverageId +  " is not found");
+            throw new InformationNotFoundException("Beverage type with id " + beverageId + ", beverage type id " + beverageTypeId + " and userId " + getCurrentLoggedInUser().getId() + " is not found");
         }
     }
 
