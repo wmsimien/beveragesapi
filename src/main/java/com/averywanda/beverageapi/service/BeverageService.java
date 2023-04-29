@@ -82,18 +82,18 @@ public class BeverageService {
         }
     }
 
-    /**
+    /** @GetMapping(path = "/beverage-type/{beverageTypeId}/")
      * Method handles returning a specific beverage type based on the Id passed-in.
      * @param beverageTypeId
      * @return
      */
     public Optional<BeverageType> getBeverageType(Long beverageTypeId) {
-        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        Optional<BeverageType> beverageType = beverageTypeRepository.findByIdAndUserId(beverageTypeId, getCurrentLoggedInUser().getId());
         // if beverage type exist
         if (beverageType.isPresent()) {
             return beverageType;
         } else {
-            throw new InformationNotFoundException("Beverage Type with id " + beverageTypeId + " is not found" );
+            throw new InformationNotFoundException("Beverage Type with id " + beverageTypeId + " for userId " + getCurrentLoggedInUser().getId() + " was not found." );
         }
     }
 
