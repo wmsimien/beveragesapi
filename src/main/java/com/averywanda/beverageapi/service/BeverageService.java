@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -224,23 +225,25 @@ public class BeverageService {
                 beverage.get().setUser(getCurrentLoggedInUser());
                 return beverageRepository.save(beverage.get());
             } else {
-                throw new InformationNotFoundException("Beverage type with id " + beverageId + ", beverage type id " + beverageTypeId + " and userId " + getCurrentLoggedInUser().getId() + " is not found");
+                throw new InformationNotFoundException("Beverage with id " + beverageId + " and beverage type id " + beverageTypeId + " for userId " + getCurrentLoggedInUser().getId() + " is not found");
             }
         } else {
-            throw new InformationNotFoundException("Beverage type with id " + beverageId + ", beverage type id " + beverageTypeId + " and userId " + getCurrentLoggedInUser().getId() + " is not found");
+            throw new InformationNotFoundException("Beverage with id " + beverageId + " and beverage type id " + beverageTypeId + " for userId " + getCurrentLoggedInUser().getId() + " is not found");
         }
     }
 
-    /**
-     * Method handles deleting a specific beverage of a specific beverage type.
+    /** @DeleteMapping(path = "/beverage-type/{beverageTypeId}/beverages/{beverageId}/")
+     * Method handles deleting a specific beverage of a specific beverage type for the currently logged-in user.
      * @param beverageTypeId
      * @param beverageId
      */
     public void deleteBeverageTypeBeveragesBeverage(Long beverageTypeId, Long beverageId) {
-        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
-        if (beverageType.isPresent()) {
-            Optional<Beverage> beverage = beverageRepository.findById(beverageId);
-            beverageRepository.deleteById(beverage.get().getId());
+        Optional<BeverageType> beverageType = beverageTypeRepository.findByIdAndUserId(beverageTypeId, getCurrentLoggedInUser().getId());
+        try {
+            Beverage beverage = beverageRepository.findByIdAndUserId(beverageId, getCurrentLoggedInUser().getId());
+            if (beverage != null) beverageRepository.deleteById(beverage.getId());
+        } catch (NoSuchElementException e) {
+            throw new InformationNotFoundException("Beverage type with id " + beverageTypeId + " and name " + beverageType.get().getName() + " is not found");
         }
     }
 }

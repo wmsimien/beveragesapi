@@ -112,7 +112,7 @@ public class BeverageController {
     }
 
     /**
-     * Method calls service object to get a specific beverage for a specific beverage type.
+     * Method calls service object to get a specific beverage for a specific beverage type for the logged-in user.
      * @param beverageTypeId
      * @param beverageId
      * @return
@@ -123,7 +123,7 @@ public class BeverageController {
     }
 
     /**
-     * Calls service object to handle updating a specific beverage for a specific beverage type.
+     * Calls service object to handle updating a specific beverage for a specific beverage type for the logged-in user.
      * @param beverageTypeId
      * @param beverageId
      * @param beverageObject
@@ -135,7 +135,7 @@ public class BeverageController {
     }
 
     /**
-     * Calls service object to handle deleting a specific beverage for a specific beverage type.
+     * Calls service object to handle deleting a specific beverage for a specific beverage type for the logged-in user.
      * @param beverageTypeId
      * @param beverageId
      */
