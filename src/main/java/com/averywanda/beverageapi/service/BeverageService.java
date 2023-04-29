@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class BeverageService {
@@ -33,39 +34,6 @@ public class BeverageService {
             throw new InformationExistException("Beverage Type with name " + beverageTypeObject.getName() + " already exist.");
         } else {
             return beverageTypeRepository.save(beverageTypeObject);
-        }
-    }
-
-    /**
-     * Method handles the creating of a new beverage object for a specific beverage type.
-     * @param beverageObject
-     * @return A new beverage object.
-     */
-    public Beverage createBeverageTypeBeverage(Long beverageTypeId, Beverage beverageObject) {
-        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
-        if (beverageType.isPresent()) {
-            beverageObject.setBeverageType(beverageType.get());
-            return beverageRepository.save(beverageObject);
-        } else {
-            throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " not found.");
-        }
-    }
-
-    /**
-     * Method handles returning all beverage objects for a specific beverage type Id.
-     * @param beverageTypeId
-     * @return
-     */
-    public List<Beverage> getBeverageTypeBeverage(Long beverageTypeId) {
-        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
-        if (beverageType.isPresent()){
-            if (beverageType.get().getBeverageList().size() == 0) {
-                throw new InformationNotFoundException("Beverages with BeverageTypeId " + beverageTypeId + " not found");
-            } else {
-                return beverageType.get().getBeverageList();
-            }
-        } else {
-            throw new InformationNotFoundException("Beverages with BeverageTypeId " + beverageTypeId + " not found");
         }
     }
 
@@ -150,6 +118,63 @@ public class BeverageService {
             throw new InformationNotFoundException("Beverage Type with id " + beverageTypeId + " is not found" );
         }
     }
+
+    /**
+     * Method handles the creating of a new beverage object for a specific beverage type.
+     * @param beverageObject
+     * @return A new beverage object.
+     */
+    public Beverage createBeverageTypeBeverage(Long beverageTypeId, Beverage beverageObject) {
+        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        if (beverageType.isPresent()) {
+            beverageObject.setBeverageType(beverageType.get());
+            return beverageRepository.save(beverageObject);
+        } else {
+            throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " not found.");
+        }
+    }
+
+    /**
+     * Method handles returning all beverage objects for a specific beverage type Id.
+     * @param beverageTypeId
+     * @return
+     */
+    public List<Beverage> getBeverageTypeBeverage(Long beverageTypeId) {
+        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        if (beverageType.isPresent()){
+            if (beverageType.get().getBeverageList().size() == 0) {
+                throw new InformationNotFoundException("Beverages with BeverageTypeId " + beverageTypeId + " not found");
+            } else {
+                return beverageType.get().getBeverageList();
+            }
+        } else {
+            throw new InformationNotFoundException("Beverages with BeverageTypeId " + beverageTypeId + " not found");
+        }
+    }
+
+    public List<Beverage> getBeverageTypeBeveragesBeverage(Long beverageTypeId, Long beverageId) {
+        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        if (beverageType.isPresent()) {
+//            logger.info(beverageType.get().getBeverageList().toString());
+            return beverageType.get().getBeverageList().stream().filter(b -> b.getId().equals(beverageId)).collect(Collectors.toList());
+        } else {
+            throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " not found.");
+        }
+
+    }
+
+//    public Beverage updateBeverageTypeBeverage(Long beverageTypeId, Beverage beverageObject) {
+//        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+//        if (beverageType.isPresent()) {
+//            beverageObject.setBeverageType(beverageType.get());
+////            beverageObject.getName()
+//            return beverageRepository.save(beverageObject);
+//        } else {
+//            throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " not found.");
+//        }
+//
+//    }
+
 
 
 }
