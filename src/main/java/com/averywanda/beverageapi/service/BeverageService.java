@@ -189,18 +189,22 @@ public class BeverageService {
         }
     }
 
-    /**
-     * Method obtain beverages for a specific beverage type
+    /** @GetMapping(path = "/beverage-type/{beverageTypeId}/beverages/{beverageId}/")
+     * Method obtain beverages for a specific beverage type for the currently logged-in user.
      * @param beverageTypeId
      * @param beverageId
      * @return List of r Beverage objects.
      */
     public List<Beverage> getBeverageTypeBeveragesBeverage(Long beverageTypeId, Long beverageId) {
-        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        Optional<BeverageType> beverageType = beverageTypeRepository.findByIdAndUserId(beverageTypeId, getCurrentLoggedInUser().getId());
         if (beverageType.isPresent()) {
-            return beverageType.get().getBeverageList().stream().filter(b -> b.getId().equals(beverageId)).collect(Collectors.toList());
+            if (beverageType.get().getBeverageList().stream().filter(b -> b.getId().equals(beverageId)).count() == 0) {
+                throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " for userId " + getCurrentLoggedInUser().getId() + " not found.");
+            } else {
+                return beverageType.get().getBeverageList().stream().filter(b -> b.getId().equals(beverageId)).collect(Collectors.toList());
+            }
         } else {
-            throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " not found.");
+            throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " for userId " + getCurrentLoggedInUser().getId() + " not found.");
         }
     }
 
