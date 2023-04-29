@@ -140,7 +140,7 @@ public class BeverageService {
     }
 
     /** @DeleteMapping(path = "/beverage-type/{beverageTypeId}/")
-     * Method handles deleting a specific BeverageType by beverageId.
+     * Method handles deleting a specific BeverageType by beverageId for the currently logged-in user.
      * @param beverageTypeId
      * @return
      */
@@ -155,18 +155,19 @@ public class BeverageService {
         }
     }
 
-    /**
-     * Method handles the creating of a new beverage object for a specific beverage type.
+    /** @PostMapping(path = "/beverage-type/{beverageTypeId}/")
+     * Method handles the creating of a new beverage object for a specific beverage type for the currently logged-in user.
      * @param beverageObject
      * @return A new beverage object.
      */
     public Beverage createBeverageTypeBeverage(Long beverageTypeId, Beverage beverageObject) {
-        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        Optional<BeverageType> beverageType = beverageTypeRepository.findByIdAndUserId(beverageTypeId, getCurrentLoggedInUser().getId());
         if (beverageType.isPresent()) {
             beverageObject.setBeverageType(beverageType.get());
+            beverageObject.setUser(getCurrentLoggedInUser());
             return beverageRepository.save(beverageObject);
         } else {
-            throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " not found.");
+            throw new InformationNotFoundException("BeverageType id " + beverageTypeId + " for userId " + getCurrentLoggedInUser().getId() + " not found.");
         }
     }
 

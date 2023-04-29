@@ -63,7 +63,7 @@ public class BeverageController {
     }
 
     /**
-     * Method calls the Beverage server object to handle deleting a specific beverage type by Id.
+     * Method calls the Beverage server object to handle deleting a specific beverage type by Id for the currently logged-in user.
      * @param beverageTypeId
      * @return
      */
@@ -73,7 +73,7 @@ public class BeverageController {
     }
 
     /**
-     * Method calls beverage service object to handle creating of a new beverage object under a specific beverage type.
+     * Method calls beverage service object to handle creating of a new beverage object under a specific beverage type for the currently logged-in user.
      * @param beverageObject
      * @return A Beverage object.
      */
