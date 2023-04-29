@@ -39,14 +39,14 @@ public class BeverageService {
         return userDetails.getUser();
     }
 
-    /**
+    /** @PostMapping(path = "/beverage-type/")
      * Method handles creating beverage types for the current logged-in user
      * @param beverageTypeObject
      * @return A BeverageType object.
      */
     public BeverageType createBeverageTypes(BeverageType beverageTypeObject) {
         BeverageType beverageType = beverageTypeRepository.findByUserIdAndName(getCurrentLoggedInUser().getId(), beverageTypeObject.getName());
-        // check if exist
+        // check exist, for current logged-in user
         if (beverageType != null) {
             throw new InformationExistException("Beverage Type with name " + beverageTypeObject.getName() + " already exist.");
         } else {
@@ -56,20 +56,30 @@ public class BeverageService {
         }
     }
 
-    /**
-     * Method handles returning all beverages for a specific beverage type.
-     * @return A list of BeverageType objects.
+    /** @GetMapping(path = "/beverage-type/")
+     * Method handles returning all beverages for a specific beverage type for the current logged-in user.
+     * @return A list of BeverageType objects of the current logged-in user.
      */
     public List<BeverageType> getBeverageTypes() {
-        return beverageTypeRepository.findAll();
+        List<BeverageType> beverageTypes = beverageTypeRepository.findByUserId(getCurrentLoggedInUser().getId());
+        if (beverageTypes.isEmpty()) {
+            throw new InformationNotFoundException(" No Beverage Types found for userId " + getCurrentLoggedInUser().getId() + ".");
+        } else {
+            return beverageTypes;
+        }
     }
 
-    /**
+    /** @GetMapping(path = "/beverages/")
      * Method handles returning all beverages.
      * @return List of Beverage objects.
      */
     public List<Beverage> getBeverages() {
-        return beverageRepository.findAll();
+        List<Beverage> beverageList = beverageRepository.findByUserId(getCurrentLoggedInUser().getId());
+        if (beverageList.isEmpty()) {
+            throw new InformationNotFoundException(" No Beverage found for userId " + getCurrentLoggedInUser().getId() + ".");
+        } else {
+            return beverageList;
+        }
     }
 
     /**

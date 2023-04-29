@@ -83,7 +83,7 @@ public class BeverageController {
     }
 
     /**
-     * Method calls service object to return a list of beverages.
+     * Method calls service object to return a list of beverages for the logged-in user.
      * @return A list of beverage objects.
      */
     @GetMapping(path = "/beverages/")
