@@ -12,6 +12,9 @@ public interface BeverageTypeRepository extends JpaRepository<BeverageType, Long
     // obtain beverage type by name
     BeverageType findByName(String beverageTypeName);
 
+    // obtain beverage type by current user id and beverageType name
+    BeverageType findByUserIdAndName(Long userId, String beverageTypeName);
+
     // obtain beverage type by id
     Optional<BeverageType> findById(Long beverageTypeId);
 

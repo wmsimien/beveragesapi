@@ -4,16 +4,18 @@ import com.averywanda.beverageapi.exception.InformationExistException;
 import com.averywanda.beverageapi.exception.InformationNotFoundException;
 import com.averywanda.beverageapi.model.Beverage;
 import com.averywanda.beverageapi.model.BeverageType;
+import com.averywanda.beverageapi.model.User;
 import com.averywanda.beverageapi.repository.BeverageRepository;
 import com.averywanda.beverageapi.repository.BeverageTypeRepository;
+import com.averywanda.beverageapi.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -28,12 +30,28 @@ public class BeverageService {
     @Autowired
     private BeverageTypeRepository beverageTypeRepository;
 
+    /**
+     * Method handles obtaining the current user logged-in
+     * @return A User : all the user detail of that logged-in user
+     */
+    public static User getCurrentLoggedInUser() {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUser();
+    }
+
+    /**
+     * Method handles creating beverage types for the current logged-in user
+     * @param beverageTypeObject
+     * @return A BeverageType object.
+     */
     public BeverageType createBeverageTypes(BeverageType beverageTypeObject) {
-        BeverageType beverageType = beverageTypeRepository.findByName(beverageTypeObject.getName());
+        BeverageType beverageType = beverageTypeRepository.findByUserIdAndName(getCurrentLoggedInUser().getId(), beverageTypeObject.getName());
         // check if exist
         if (beverageType != null) {
             throw new InformationExistException("Beverage Type with name " + beverageTypeObject.getName() + " already exist.");
         } else {
+            // set current logged-in user
+            beverageTypeObject.setUser(getCurrentLoggedInUser());
             return beverageTypeRepository.save(beverageTypeObject);
         }
     }
