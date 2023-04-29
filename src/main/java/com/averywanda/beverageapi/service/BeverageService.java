@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -125,30 +126,32 @@ public class BeverageService {
      */
     public BeverageType updateBeverageType(Long beverageTypeId, BeverageType beverageTypeObject) {
         Optional<BeverageType> beverageType = beverageTypeRepository.findByIdAndUserId(beverageTypeId, getCurrentLoggedInUser().getId());
+
         if (beverageType.isPresent()) {
             // get the container and set passed-in data for current logged-in user
             BeverageType updatedBeverageType = beverageType.get();
             updatedBeverageType.setName(beverageTypeObject.getName());
             updatedBeverageType.setUser(getCurrentLoggedInUser());
             return beverageTypeRepository.save(updatedBeverageType);
-        } else {
-            throw new InformationNotFoundException("Beverage Type " + beverageType.get().getName() + "for userid " + getCurrentLoggedInUser().getId() + " not found.");
+        }
+        else {
+            throw new InformationNotFoundException("Beverage Type with id " + beverageTypeId + "for userid " + getCurrentLoggedInUser().getId() + " not found.");
         }
     }
 
-    /**
+    /** @DeleteMapping(path = "/beverage-type/{beverageTypeId}/")
      * Method handles deleting a specific BeverageType by beverageId.
      * @param beverageTypeId
      * @return
      */
     public Optional<BeverageType> deleteBeverageType(Long beverageTypeId) {
-        Optional<BeverageType> beverageType = beverageTypeRepository.findById(beverageTypeId);
+        Optional<BeverageType> beverageType = beverageTypeRepository.findByIdAndUserId(beverageTypeId, getCurrentLoggedInUser().getId());
         // if beverage type exist
         if (beverageType.isPresent()) {
             beverageTypeRepository.deleteById(beverageTypeId);
             return beverageType;
         } else {
-            throw new InformationNotFoundException("Beverage Type with id " + beverageTypeId + " is not found" );
+            throw new InformationNotFoundException("Beverage Type with id " + beverageTypeId + " for userId " + getCurrentLoggedInUser().getId() + " not found.");
         }
     }
 
