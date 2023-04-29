@@ -23,7 +23,7 @@ public class BeverageController {
     }
 
     /**
-     * Method calls the Beverage service object to handle creating a new beverage type object.
+     * Method calls the Beverage service object to handle creating a new beverage type object for the current logged-in user.
      * @param beverageTypeObject
      * @return
      */
@@ -33,7 +33,7 @@ public class BeverageController {
     }
 
     /**
-     * Method calls Beverage service object to handle getting all beverage types.
+     * Method calls Beverage service object to handle getting all beverage types for the current logged-in user.
      * @return A list of BeverageType objects.
      */
     @GetMapping(path = "/beverage-type/")
@@ -42,7 +42,7 @@ public class BeverageController {
     }
 
     /**
-     * Method call Beverage service object to handle getting a specific beverage type by Id.
+     * Method call Beverage service object to handle getting a specific beverage type by Id for the current logged-in user.
      * @param beverageTypeId
      * @return A BeverageType object.
      */
@@ -52,10 +52,10 @@ public class BeverageController {
     }
 
     /**
-     * Method calls the Beverage service object to handle updating a specific beverage type name.
+     * Method calls the Beverage service object to handle updating a specific beverage type name for the currently logged-in user.
      * @param beverageTypeId
      * @param beverageTypeObject
-     * @return
+     * @return Updated Beverage Type object.
      */
     @PutMapping(path = "/beverage-type/{beverageTypeId}/")
     public BeverageType updateBeverageType(@PathVariable Long beverageTypeId, @RequestBody BeverageType beverageTypeObject) {
