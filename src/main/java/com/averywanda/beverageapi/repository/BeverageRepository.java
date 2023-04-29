@@ -9,13 +9,13 @@ import java.util.Optional;
 public interface BeverageRepository extends JpaRepository<Beverage, Long> {
 
     // Get beverage by name
-    Beverage findByName(String beverageName);
+//    Beverage findByName(String beverageName);
 
-    Beverage findByNameAndBeverageTypeId(String name, Long beverageTypeId);
+//    Beverage findByNameAndBeverageTypeId(String name, Long beverageTypeId);
 
     // Get beverage by Id
    Optional<Beverage> findById(Long beverageId);
 
-    Beverage findByIdAndBeverageType(Long beverageId, Long beverageTypeId);
+//    Beverage findByIdAndBeverageType(Long beverageId, Long beverageTypeId);
 
 }
