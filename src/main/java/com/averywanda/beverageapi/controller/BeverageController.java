@@ -143,10 +143,4 @@ public class BeverageController {
     public void deleteBeverageTypeBeveragesBeverage(@PathVariable(value = "beverageTypeId") Long beverageTypeId, @PathVariable Long beverageId) {
         beverageService.deleteBeverageTypeBeveragesBeverage(beverageTypeId, beverageId);
     }
-
-
-
-
-
-
 }

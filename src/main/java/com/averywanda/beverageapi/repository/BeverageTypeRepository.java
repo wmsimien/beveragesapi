@@ -10,9 +10,6 @@ import java.util.Optional;
 @Repository
 public interface BeverageTypeRepository extends JpaRepository<BeverageType, Long> {
 
-    // obtain beverage type by name
-    BeverageType findByName(String beverageTypeName);
-
     // obtain beverage type listing for current logged-in user
     List<BeverageType> findByUserId(Long userId);
 
