@@ -2,19 +2,25 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
-The Family Time Beverage API will allow registered users the ability to maintain their beverages grouped in their own beverage types.  This fully functioning C(reate)R(ead)U(pdate}D(elete) API will provide registered users the ability to track all their beverages safely and securely. 
+The Family Time Beverage API will allow registered users the ability to maintain their beverages grouped in their own beverage types.  This fully functioning C(reate)R(ead)U(pdate}D(elete) API will provide registered users the ability to track all their beverages safely and securely.
 
 # Table of Contents
 
+- [Technologies Used](#technologies-used)
 - [Installation](#installation)
-- [Usage](#usage)
 - [User Stories](#user-stories)
+- [Usage](#usage)
+- [Technology](#Technology)
 - [Credits](#credits)
 - [License](#license)
 - [Questions](#questions)
 - [Credits](#credits)
 - [Contributing](#contributing)
 - [Test](#test)
+
+
+## Technologies Used
+
 
 ## Installation
 1.  Clone the repository.
@@ -27,33 +33,10 @@ The Family Time Beverage API will allow registered users the ability to maintain
    2023-04-30 12:48:03.906  INFO 71465 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
    2023-04-30 12:48:03.940  INFO 71465 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
    ```
-
-## Usage
-Using an API platform like Postman, as a registered user, you can call all operational endpoints of the Family Time Beverage API (FTBA) which are available on port 9092.  An unregistered user can only access the register and login endpoints as follows:
-```
--- To Register:
-localhost:9092/auth/users/register/
-
-{
-    "userName" : "jane",
-    "email": "jane@aol.com",
-    "password": "jane"
-}
--- To Login:
-localhost:9092/auth/users/login/
-
-{
-    "email":"jane@aol.com",
-    "password":"jane"
-}
-```
-Once the registered user logs in, a JWT will be returned which will be needed to access all the other endpoints.  The JWT will need to be added to every request/endpoint headers section with 'Authorization' as a Key and the Value will need to be Bear [JWT] as follows:
-![Postman Headers](./src/main/resources/assets/postman_headers.png)
-
 ## User Stories
 1. As an unregistered user of the Family Time Beverages API (FTBAPI), I should only have access to the following public urls/endpoints: /auth/users/register and /auth/users/login.
 1. As an unregistered user of FTBAPI, I want the ability to create a new user to become a registered user.
-1. As an unregistered user of FTBAPI, I should be displayed a user-friendly message if not able to become a registered user.
+1. As a registered user of FTBAPI, I should be able to log in and then have access to the other endpoints.
 1. As a registered user of FTBAPI, I should be able to create my beverage types enabling me to have beverage types of my choosing.
 1. As a registered user of FTBAPI, I should be able to create my own beverages under any available beverage types with the following information:  name, description, pairing, goodToKnow, and proTip.
 1. As a registered user of FTBAPI, I should be able to update my own beverage description, pairing, goodToKnow, and proTip.
@@ -65,9 +48,49 @@ Once the registered user logs in, a JWT will be returned which will be needed to
 1. As a registered user of FTBAPI, I should be able to delete any of my beverage types of my choosing.
 1. As a registered user of FTBAPI, I should be able to update any of my beverage types and change the beverage type to another name of my choosing.
 
+
+## Usage
+Using an API platform like Postman, as a registered user, you can call all operational endpoints of the Family Time Beverage API (FTBA) which are available on port 9092.  An unregistered user can only access the register and login endpoints as follows:
+```
+-- #2 To Creaste a New User (Register):
+localhost:9092/auth/users/register/
+
+{
+    "userName" : "jane",
+    "email": "jane@aol.com",
+    "password": "jane"
+}
+-- #3 To Login As a Registered User:
+localhost:9092/auth/users/login/
+
+{
+    "email":"jane@aol.com",
+    "password":"jane"
+}
+```
+
+Once the registered user logs in, a JWT will be returned which will be needed to access all the other endpoints.  The JWT will need to be added to every request/endpoint headers section with 'Authorization' as a Key and the Value will need to be Bear [JWT] as follows:
+![Postman Headers](./src/main/resources/assets/postman_headers.png)
+
+```
+-- #4 Create A Beverage Type
+POST localhost:9092/api/beverage-type/
+{
+    "name":"MaeMae-Tea Drinks"
+    
+}
+
+RESPONSE 200 OK
+{
+    "id": 29,
+    "name": "MaeMae-Tea Drinks",
+    "beverageList": null
+}
+```
+
+
 ## Credits
-     DL Avery                
-     Marie Simien                
+                     
 
 ## Contributing
 Any contributing suggestion(s) or bug notification(s) is greatly appreciated.  Reporting
