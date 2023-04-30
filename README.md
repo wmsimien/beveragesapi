@@ -120,7 +120,27 @@ RESPONSE 200 OK
     "beverageList": []
 }
 ```
+### #8 Create A Beverage For A Specific Beverage Type
+```
+POST localhost:9092/api/beverage-type/29/
+{
+    "name":"MaeMae - Cherry-Berry Drink",
+    "description":"Sweet Smooth Cherry Berry Fizzles",
+    "pairing":"Tofu/Chicken/Fish",
+    "goodToKnow":"Great w/ all eats.",
+    "proTip":"Enjoy w/ all eats"
+}
 
+RESPONSE 200 OK
+{
+    "id": 30,
+    "name": "MaeMae - Cherry-Berry Drink",
+    "description": "Sweet Smooth Cherry Berry Fizzles",
+    "pairing": "Tofu/Chicken/Fish",
+    "goodToKnow": "Great w/ all eats.",
+    "proTip": "Enjoy w/ all eats"
+}
+```
 
 ## Credits
                      
