@@ -38,21 +38,23 @@ The Family Time Beverage API will allow registered users the ability to maintain
 1. As an unregistered user of FTBAPI, I want the ability to create a new user to become a registered user.
 1. As a registered user of FTBAPI, I should be able to log in and then have access to the other endpoints.
 1. As a registered user of FTBAPI, I should be able to create my beverage types enabling me to have beverage types of my choosing.
+1. As a registered user of FTBAPI, I should be able to see a listing of all beverages types and assigned beverages in order to easily see that listing creating by me.
+1. As a registered user of FTBAPI, I should be able to update any of my beverage types and change the beverage type to another name of my choosing.
+1. As a registered user of FTBAPI, I should be able to delete any of my beverage types of my choosing.
 1. As a registered user of FTBAPI, I should be able to create my own beverages under any available beverage types with the following information:  name, description, pairing, goodToKnow, and proTip.
 1. As a registered user of FTBAPI, I should be able to update my own beverage description, pairing, goodToKnow, and proTip.
 1. As a registered user of FTBAPI, I should be able to delete any beverage created by me to prevent it from showing up in any listing.
 1. As a registered user of FTBAPI, I should be able to see a listing of all beverages created by me.
 1. As a registered user of FTBAPI, I should be able to see a listing of all beverages for a specific type created by me.
-1. As a registered user of FTBAPI, I should be able to see a listing of all beverages types and assigned beverages in order to easily see that listing creating by me.
 1. As a registered user of FTBAPI, I should be able to obtain a beverage for a specific type created by me.
-1. As a registered user of FTBAPI, I should be able to delete any of my beverage types of my choosing.
-1. As a registered user of FTBAPI, I should be able to update any of my beverage types and change the beverage type to another name of my choosing.
+
 
 
 ## Usage
 Using an API platform like Postman, as a registered user, you can call all operational endpoints of the Family Time Beverage API (FTBA) which are available on port 9092.  An unregistered user can only access the register and login endpoints as follows:
+
+### #2 To Creaste a New User (Register):
 ```
--- #2 To Creaste a New User (Register):
 localhost:9092/auth/users/register/
 
 {
@@ -60,7 +62,9 @@ localhost:9092/auth/users/register/
     "email": "jane@aol.com",
     "password": "jane"
 }
--- #3 To Login As a Registered User:
+```
+### #3 To Login As a Registered User:
+```
 localhost:9092/auth/users/login/
 
 {
@@ -72,8 +76,8 @@ localhost:9092/auth/users/login/
 Once the registered user logs in, a JWT will be returned which will be needed to access all the other endpoints.  The JWT will need to be added to every request/endpoint headers section with 'Authorization' as a Key and the Value will need to be Bear [JWT] as follows:
 ![Postman Headers](./src/main/resources/assets/postman_headers.png)
 
+### #4 Create A Beverage Type
 ```
--- #4 Create A Beverage Type
 POST localhost:9092/api/beverage-type/
 {
     "name":"MaeMae-Tea Drinks"
@@ -85,6 +89,35 @@ RESPONSE 200 OK
     "id": 29,
     "name": "MaeMae-Tea Drinks",
     "beverageList": null
+}
+```
+
+### #5 Listing of All Beverage Types
+```
+GET localhost:9092/api/beverage-type/
+
+RESPONSE 200 OK
+[
+    {
+        "id": 29,
+        "name": "MaeMae-Tea Drinks",
+        "beverageList": []
+    }
+]
+```
+
+### #6 Update A Specific Beverage Type
+```
+PUT localhost:9092/api/beverage-type/29/
+{
+    "name":"MaeMae - Very Cherry Drinks"
+}
+
+RESPONSE 200 OK
+{
+    "id": 29,
+    "name": "MaeMae - Very Cherry Drinks",
+    "beverageList": []
 }
 ```
 
