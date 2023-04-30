@@ -8,6 +8,7 @@ The Family Time Beverage API will allow registered users the ability to maintain
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [User Stories](#user-stories)
 - [Credits](#credits)
 - [License](#license)
 - [Questions](#questions)
@@ -49,7 +50,20 @@ localhost:9092/auth/users/login/
 Once the registered user logs in, a JWT will be returned which will be needed to access all the other endpoints.  The JWT will need to be added to every request/endpoint headers section with 'Authorization' as a Key and the Value will need to be Bear [JWT] as follows:
 ![Postman Headers](./src/main/resources/assets/postman_headers.png)
 
-
+## User Stories
+1. As an unregistered user of the Family Time Beverages API (FTBAPI), I should only have access to the following public urls/endpoints: /auth/users/register and /auth/users/login.
+1. As an unregistered user of FTBAPI, I want the ability to create a new user to become a registered user.
+1. As an unregistered user of FTBAPI, I should be displayed a user-friendly message if not able to become a registered user.
+1. As a registered user of FTBAPI, I should be able to create my beverage types enabling me to have beverage types of my choosing.
+1. As a registered user of FTBAPI, I should be able to create my own beverages under any available beverage types with the following information:  name, description, pairing, goodToKnow, and proTip.
+1. As a registered user of FTBAPI, I should be able to update my own beverage description, pairing, goodToKnow, and proTip.
+1. As a registered user of FTBAPI, I should be able to delete any beverage created by me to prevent it from showing up in any listing.
+1. As a registered user of FTBAPI, I should be able to see a listing of all beverages created by me.
+1. As a registered user of FTBAPI, I should be able to see a listing of all beverages for a specific type created by me.
+1. As a registered user of FTBAPI, I should be able to see a listing of all beverages types and assigned beverages in order to easily see that listing creating by me.
+1. As a registered user of FTBAPI, I should be able to obtain a beverage for a specific type created by me.
+1. As a registered user of FTBAPI, I should be able to delete any of my beverage types of my choosing.
+1. As a registered user of FTBAPI, I should be able to update any of my beverage types and change the beverage type to another name of my choosing.
 
 ## Credits
      DL Avery                
