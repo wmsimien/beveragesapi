@@ -142,6 +142,46 @@ RESPONSE 200 OK
 }
 ```
 
+### #11 Display A Listing Of All Beverage
+```
+GET localhost:9092/api/beverages/
+
+RESPONSE 200 OK
+[
+    {
+        "id": 12,
+        "name": "Java Twins",
+        "description": "Smooth Twin Java",
+        "pairing": "Tofu/Chicken/Fish",
+        "goodToKnow": "Great w/ all eats.",
+        "proTip": "Enjoy w/ all eats"
+    },
+    {
+        "id": 13,
+        "name": "Java Blend",
+        "description": "Smooth Blended Java",
+        "pairing": "Tofu/Chicken/Fish",
+        "goodToKnow": "Great w/ all eats.",
+        "proTip": "Enjoy w/ all eats"
+    },
+    {
+        "id": 29,
+        "name": "Java Blend",
+        "description": "Smooth Blended Java",
+        "pairing": "Tofu/Chicken/Fish",
+        "goodToKnow": "Great w/ all eats.",
+        "proTip": "Enjoy w/ all eats"
+    },
+    {
+        "id": 30,
+        "name": "MaeMae - Cherry-Berry Drink",
+        "description": "Sweet Smooth Cherry Berry Fizzles",
+        "pairing": "Tofu/Chicken/Fish",
+        "goodToKnow": "Great w/ all eats.",
+        "proTip": "Enjoy w/ all eats"
+    }
+]
+```
 ## Credits
                      
 
