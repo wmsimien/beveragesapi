@@ -2,7 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
-The Family Time Beverage API will allow registered users the ability to maintain their beverages grouped in their own beverage types.  This fully functioning C(reate)R(ead)U(pdate}D(elete) API will provide registered users the ability to track all their beverages safely and securely.
+The Family Time Beverage API is a REST api which will allow registered users the ability to maintain their beverages grouped in their own beverage types.  This fully functioning C(reate)R(ead)U(pdate}D(elete) API will provide registered users the ability to track all their beverages safely and securely.
 
 # Table of Contents
 
@@ -20,6 +20,14 @@ The Family Time Beverage API will allow registered users the ability to maintain
 
 
 ## Technologies Used
+- Java 17
+- Spring Boot 2.7.8
+- Maven 4.x
+- JWT
+- PostgreSQL
+- IntelliJ IDEA
+- PGAdmin4
+- Postman
 
 
 ## Installation
@@ -51,9 +59,10 @@ The Family Time Beverage API will allow registered users the ability to maintain
 
 
 ## Usage
-Using an API platform like Postman, as a registered user, you can call all operational endpoints of the Family Time Beverage API (FTBA) which are available on port 9092.  An unregistered user can only access the register and login endpoints as follows:
+Using an API platform like Postman, as a registered user, you can call all operational endpoints of the Family Time Beverage API (FTBA) which are available on port 9092.  PostgresSQL is the database used and a new 'Database' entry, named beverage, needs to be created.  PGAdmin is a web-based GUI which can be used for this task as it can communicate with your Postgres database.  
 
-### #2 To Creaste a New User (Register):
+An unregistered user can only access the register endpoint as follows:
+### #2 To Create a New User (Register):
 ```
 localhost:9092/auth/users/register/
 
@@ -63,6 +72,7 @@ localhost:9092/auth/users/register/
     "password": "jane"
 }
 ```
+A registered user can accessc the login endpoint as follows:
 ### #3 To Login As a Registered User:
 ```
 localhost:9092/auth/users/login/
