@@ -18,21 +18,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    /**
-     * Calls method to create user
-     * /auth/users/register/
-     * @param userObject
-     * @return
+    /** POST /auth/users/register/
+     * Calls method to create a registered user
+     *
+     * @param userObject User data passed into method.
+     * @return User order.
      */
     @PostMapping(path="/register/")
     public User createUser(@RequestBody User userObject) {
         return userService.createUser(userObject);
     }
 
-    /**
-     * Calls method to login user
-     * @param loginRequest
-     * @return
+    /** POST /auth/users/login/
+     * Calls method to login a registered user using  credentials passed-in.
+     * @param loginRequest Contains registered user's email and password.
+     * @return Returns authorization, JWT.
      */
     @PostMapping(path="/login/")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
