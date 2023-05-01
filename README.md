@@ -61,9 +61,9 @@ https://docs.google.com/document/d/1sIzwKBlCLPSUYdU6CzwdtqNyLfoyN84VbOtsOaX6tjw/
 
 ## Usage
 
-Using an API platform like Postman, as a registered user, you can call all operational endpoints of the Family Time Beverage API (FTBA) which are available on port 9092.  PostgresSQL is the database used and a new 'Database' entry, named beverage, needs to be created.  PGAdmin is a web-based GUI which can be used for this task as it can communicate with your Postgres database.  
+Using an API platform like Postman, as a registered user, you can access all operational endpoints of the Family Time Beverage API (FTBA) which are available on port 9092.  PostgresSQL is the database used and a new 'Database' entry, named beverages, needs to be created.  PGAdmin is a web-based GUI which can be used for this task as it can communicate with your Postgres database.  
 
-![FTBAPI ERD](./src/main/resources/assets/ftbapi_erd.png)
+![FTBAPI ERD](./src/main/resources/assets/FTBAPI_ERD.png)
 
 An unregistered user can only access the register endpoint as follows:
 ### #2 To Create a New User (Register):
